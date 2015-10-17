@@ -1,5 +1,11 @@
-<ion-view view-title="Browse">
-  <ion-content>
-    <h1>Browse</h1>
+<ion-view view-title="Venues">
+  <ion-content class="has-header">
+
+    <ul class="list">
+      <li class="item" ng-repeat="venue in venues" ui-sref="app.venue({venueId:venue.id})">
+        {{venue.name}}
+      </li>
+    </ul>
+
   </ion-content>
 </ion-view>

@@ -1,11 +1,22 @@
-<ion-view view-title="Pictures">
+<ion-view view-title="{{venue.name}}">
   <ion-content class="has-header">
+    <div class="list card">
 
-    <ul class="list">
-      <li class="item" ng-repeat="venue in venues">
-        {{venue.name}}
-      </li>
-    </ul>
+      <div class="item item-avatar">
+        <img ng-src="{{venue.thumbnail}}">
+        <h2 ng-bind="venue.name"></h2>
+        <p>{{venue.location.address}} / {{venue.location.city}}</p>
+      </div>
 
+      <div class="item item-image">
+        <img ng-src="{{venue.photo}}">
+      </div>
+
+      <a class="item item-icon-left assertive" href="#">
+        <i class="icon ion-heart"></i>
+        {{venue.likes.summary}}
+      </a>
+
+    </div>
   </ion-content>
 </ion-view>

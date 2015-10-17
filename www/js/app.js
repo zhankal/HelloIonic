@@ -22,10 +22,50 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
+.factory('api', function($http) {
+    var apiUrl = 'https://api.foursquare.com/v2/',
+        clientId = '',
+        clientSecret = '',
+        v = '20151017';
+
+    return {
+        searchVenue: function (searchText, success) {
+            $http({
+                url: apiUrl + 'venues/search?',
+                method: 'GET',
+                params: {
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                    v: v,
+                    near: 'Ankara,tr',
+                    query: searchText
+                }
+            })
+                .success(function(data) {
+                    success(data);
+                });
+        },
+        getVenue: function(venueId, success) {
+            $http({
+                url: apiUrl + 'venues/' + venueId,
+                method: 'GET',
+                params: {
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                    v: v
+                }
+            })
+                .success(function(data) {
+                    success(data);
+                });
+        }
+    }
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -36,38 +76,31 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/search',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+          templateUrl: 'templates/search.html',
+          controller: 'SearchCtrl'
       }
     }
   })
 
   .state('app.browse', {
-      url: '/browse',
+      url: '/browse?searchText',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+            templateUrl: 'templates/browse.html',
+            controller: 'BrowseCtrl'
         }
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
+  })
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+  .state('app.venue', {
+      url: '/venue?venueId',
+      views: {
+          'menuContent': {
+              templateUrl: 'templates/venue.html',
+              controller: 'VenueCtrl'
+          }
       }
-    }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/search');
 });

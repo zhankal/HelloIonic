@@ -1,5 +1,20 @@
-<ion-view view-title="Search">
-  <ion-content>
-    <h1>Search</h1>
+<ion-view view-title="Search Venue">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+    <form name="search-form" ng-submit="search()">
+      <div class="list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Location name" ng-model="mainData.searchText">
+          </label>
+          <button class="button button-small">
+            Search
+          </button>
+        </div>
+      </div>
+    </form>
   </ion-content>
 </ion-view>
